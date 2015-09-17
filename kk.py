@@ -179,7 +179,10 @@ class Window:
 
 def main():
 	w = Window()
-	w.run();
+        try:
+            w.run();
+        except:
+            print("Exiting.")
 
 if __name__ == "__main__":
 	main()
