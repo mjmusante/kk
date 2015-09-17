@@ -47,28 +47,60 @@ element = (
 		("Zr",	"Zirconium"),	# 40
 		)
 
-def main():
-	x = range(40)
-	random.shuffle(x)
-	for n in x:
-		e = element[n]
-		if random.random() < 0.5:
-			ask = e[0]
-			answer = e[1]
-			query = "symbol"
-			response = "name"
-		else:
-			ask = e[1]
-			answer = e[0]
-			query = "name"
-			response = "symbol"
+class Element:
+	def __init__(self, symbol, name, number, which):
+		self.symbol = symbol
+		self.name = name
+		self.number = number
+		self.which = which
+		self.correct = False
 
-		result = raw_input("Element %s is %s; " \
-		    "what is the element's %s? " % (query, ask, response))
-		if result.lower() != answer.lower():
-			print("No, it was %s" % answer)
+	def get_ask(self):
+		if self.which == 0:
+			return self.symbol
+		else:
+			return self.name
+	
+	def get_answer(self):
+		if self.which == 0:
+			return self.name
+		else:
+			return self.symbol
+	
+	def mark_correct(self):
+		self.correct = True
+
+
+brain = list()
+
+def setup():
+	i = 1
+	for e in element:
+		brain.append(Element(e[0], e[1], i, 0))
+		brain.append(Element(e[0], e[1], i, 1))
+
+def main():
+	setup()
+	random.shuffle(brain)
+	n = 0
+	limit = len(brain)
+	while len(brain) > 0:
+		if n >= limit:
+			random.shuffle(brain)
+			limit = len(brain)
+			n = 0
+		e = brain[n]
+
+		question = ">> %s << ? " % e.get_ask()
+		result = raw_input(question)
+
+		brain.remove(e)
+		if result.lower() != e.get_answer().lower():
+			print("No, it was %s" % e.get_answer())
+			brain.append(e)
 		else:
 			print("Right!")
+
 
 if __name__ == "__main__":
 	main()
