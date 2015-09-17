@@ -126,32 +126,39 @@ class Window:
 		self.cur = None
 
 		self.root = Tk()
-		self.frame = Frame(self.root, width=100, height=100)
-		self.tl = Label(self.root,
-				text="Questions left: %s" % len(self.quiz.brain))
-		self.tl.pack()
-		self.query = Label(self.root, text=".")
-		self.query.pack()
-		self.response = Entry(self.root)
-		self.response.pack()
+		self.frame = Frame(self.root)
+		self.tl = Label(self.root, text="Questions left: %s" % \
+                                len(self.quiz.brain), bg="light green",
+                                font="Helvetica 16 bold")
+		self.tl.pack(pady=5)
+		self.query = Label(self.root, text=".",
+                                   font="Helvetica 24 bold")
+		self.query.pack(pady=15)
+		self.response = Entry(self.root, justify=CENTER)
+		self.response.pack(padx=20)
 		self.startit = Button(self.frame,
 				      text="Start!",
 				      command=lambda: self.go(self))
-		self.startit.pack()
-		self.frame.pack()
+		self.startit.pack(pady=30)
+		self.frame.pack(padx=200, pady=100)
 		self.root.bind("<Return>", self.check)
 
 	def go(self, event):
 		self.startit.pack_forget()
 		self.cur = self.quiz.get_next()
+                self.response.focus()
 		self.query.config(text = self.cur.get_ask())
 
 	def check(self, event):
 		x = self.response.get()
 		self.response.delete(0, END)
 		if self.cur:
-			if x.lower() != self.cur.get_answer().lower():
-				header = "No: %s" % self.cur.get_answer()
+                        answer=self.cur.get_answer()
+                        bg = "light green"
+			if x.lower() != answer.lower():
+				header = "No: %s is %s" % \
+                                        (self.cur.get_ask(), answer)
+                                bg="red2"
 				self.quiz.re_ask(self.cur)
 			else:
 				qleft = len(self.quiz.brain)
@@ -164,7 +171,7 @@ class Window:
 				self.quiz = Quiz()
 			else:
 				self.query.config(text=self.cur.get_ask())
-				self.tl.config(text=header)
+				self.tl.config(text=header, bg=bg)
 
 	
 	def run(self):
