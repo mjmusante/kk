@@ -4,6 +4,8 @@ from __future__ import print_function
 import random
 import sys
 
+from Tkinter import *
+
 element = (
 		("H",	"Hydrogen"),	# 1
 		("He",	"Helium"),	# 2
@@ -45,7 +47,7 @@ element = (
 		("Sr",	"Strontium"),	# 38
 		("Y",	"Yttrium"),	# 39
 		("Zr",	"Zirconium"),	# 40
-		)
+	)
 
 class Element:
 	def __init__(self, symbol, name, number, which):
@@ -71,15 +73,32 @@ class Element:
 		self.correct = True
 
 
-brain = list()
+class Quiz:
+	def __init__(self):
+		self.brain = list()
+		i = 1
+		for e in element:
+			self.brain.append(Element(e[0], e[1], i, 0))
+			self.brain.append(Element(e[0], e[1], i, 1))
+			i += 1
+		random.shuffle(self.brain)
+		self.n = 0
+		self.limit = len(self.brain)
 
-def setup():
-	i = 1
-	for e in element:
-		brain.append(Element(e[0], e[1], i, 0))
-		brain.append(Element(e[0], e[1], i, 1))
+	def get_next(self):
+		if len(self.brain) == 0:
+			return None
+		if self.n >= self.limit:
+			random.shuffle(self.brain)
+			limit = len(self.brain)
+			self.n = 0
+		self.n += 1
+		return self.brain.pop(0)
 
-def main():
+	def re_ask(self, e):
+		self.brain.append(e)
+
+def ask():
 	setup()
 	random.shuffle(brain)
 	n = 0
@@ -101,6 +120,59 @@ def main():
 		else:
 			print("Right!")
 
+class Window:
+	def __init__(self):
+		self.quiz = Quiz()
+		self.cur = None
+
+		self.root = Tk()
+		self.frame = Frame(self.root, width=100, height=100)
+		self.tl = Label(self.root,
+				text="Questions left: %s" % len(self.quiz.brain))
+		self.tl.pack()
+		self.query = Label(self.root, text=".")
+		self.query.pack()
+		self.response = Entry(self.root)
+		self.response.pack()
+		self.startit = Button(self.frame,
+				      text="Start!",
+				      command=lambda: self.go(self))
+		self.startit.pack()
+		self.frame.pack()
+		self.root.bind("<Return>", self.check)
+
+	def go(self, event):
+		self.startit.pack_forget()
+		self.cur = self.quiz.get_next()
+		self.query.config(text = self.cur.get_ask())
+
+	def check(self, event):
+		x = self.response.get()
+		self.response.delete(0, END)
+		if self.cur:
+			if x.lower() != self.cur.get_answer().lower():
+				header = "No: %s" % self.cur.get_answer()
+				self.quiz.re_ask(self.cur)
+			else:
+				qleft = len(self.quiz.brain)
+				header = "Questions left: %s" % qleft
+			self.cur = self.quiz.get_next()
+			if not self.cur:
+				self.startit.pack()
+				self.tl.config(text="All done!")
+				self.query.config(text=".")
+				self.quiz = Quiz()
+			else:
+				self.query.config(text=self.cur.get_ask())
+				self.tl.config(text=header)
+
+	
+	def run(self):
+		self.root.mainloop()
+
+def main():
+	w = Window()
+	w.run();
 
 if __name__ == "__main__":
 	main()
