@@ -89,12 +89,12 @@ def main():
 			random.shuffle(brain)
 			limit = len(brain)
 			n = 0
-		e = brain[n]
+		e = brain.pop(0)
+		n += 1
 
 		question = ">> %s << ? " % e.get_ask()
 		result = raw_input(question)
 
-		brain.remove(e)
 		if result.lower() != e.get_answer().lower():
 			print("No, it was %s" % e.get_answer())
 			brain.append(e)
