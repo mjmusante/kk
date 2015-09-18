@@ -47,6 +47,24 @@ element = (
 		("Sr",	"Strontium"),	# 38
 		("Y",	"Yttrium"),	# 39
 		("Zr",	"Zirconium"),	# 40
+		("Ag",	"Silver"),
+		("Cd",	"Cadmium"),
+		("Sn",	"Tin"),
+		("Sb",	"Antimony"),	
+		("I",	"Iodine"),
+		("Xe",	"Xenon"),
+		("Cs",	"Cesium"),
+		("Ba",	"Barium"),
+		("W",	"Tungsten"),
+		("Pt",	"Platinum"),
+		("Au",	"Gold"),
+		("Hg",	"Mercury"),
+		("Pb",	"Lead"),
+		("Bi",	"Bismuth"),
+		("Po",	"Polonium"),
+		("Rn",	"Radon"),
+		("Ra",	"Radium"),
+		("U",	"Uranium"),
 	)
 
 class Element:
