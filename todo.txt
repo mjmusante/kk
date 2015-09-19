@@ -1,0 +1,41 @@
+Overall requirements:
+
+ - spaced repetition
+	"As a student, I want questions to be asked in a
+	spaced reptition way so that I spend more time
+	learning the unfamiliar ones and less time
+	reviewing the ones I know well."
+
+ - add and remove questions
+	"As a teacher, I would like to be able to add
+	new questions so that students can learn new things."
+
+	"As a teacher, I would like to be able to update
+	existing questions so that errors or omissions can
+	be corrected."
+
+	"As a teacher, I would like to be able to remove
+	questions so that students are no longer asked
+	about things that are wrong or irrelevant."
+
+ - questions should have multi-directionality. i.e. if an item has
+   multiple bits of information (chemical symbol, chemical name, atomic
+   number, atomic weight, &c), should be able to show one and ask
+   another ("What is the atomic number of the element with the symbol Hg?")
+
+	"As a teacher, I would like students to be shown
+	any one aspect of a question and required to answer
+	another aspect so that the student is able to think
+	of multiple sides of an item."
+
+ - organize questions into topics
+
+	"As a teacher I would like to be able to group related
+	questions together so that students can concentrate
+	on one topic at a time."
+
+ - allow for multiple students
+
+	"As a teacher, I would like to keep track of multiple
+	students so that I can track their progress individually."
+ - 
