@@ -29,7 +29,7 @@ element = (
 		("Ca",	"Calcium"),	# 20
 		("Sc",	"Scandium"),	# 21
 		("Ti",	"Titanium"),	# 22
-		("V",	"Vandium"),	# 23
+		("V",	"Vanadium"),	# 23
 		("Cr",	"Chromium"),	# 24
 		("Mn",	"Manganese"),	# 25
 		("Fe",	"Iron"),	# 26
